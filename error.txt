@@ -1,0 +1,29 @@
+CastError: Cast to ObjectId failed for value "www" (type string) at path "_id" for model "Tour"
+    at SchemaObjectId.cast (D:\Projects\Node-Farm\node_modules\mongoose\lib\schema\objectId.js:250:11)
+    at SchemaType.applySetters (D:\Projects\Node-Farm\node_modules\mongoose\lib\schemaType.js:1236:12)
+    at SchemaType.castForQuery (D:\Projects\Node-Farm\node_modules\mongoose\lib\schemaType.js:1653:17)
+    at cast (D:\Projects\Node-Farm\node_modules\mongoose\lib\cast.js:389:32)
+    at Query.cast (D:\Projects\Node-Farm\node_modules\mongoose\lib\query.js:4868:12)
+    at Query._castConditions (D:\Projects\Node-Farm\node_modules\mongoose\lib\query.js:2265:10)
+    at model.Query._findOne (D:\Projects\Node-Farm\node_modules\mongoose\lib\query.js:2589:8)
+    at model.Query.exec (D:\Projects\Node-Farm\node_modules\mongoose\lib\query.js:4412:80)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async exports.getTourById (D:\Projects\Node-Farm\controllers\tourController.js:35:16) {
+  stringValue: '"www"',
+  messageFormat: undefined,
+  kind: 'ObjectId',
+  value: 'www',
+  path: '_id',
+  reason: BSONError: input must be a 24 character hex string, 12 byte Uint8Array, or an integer
+      at new ObjectId (D:\Projects\Node-Farm\node_modules\bson\lib\bson.cjs:2362:23)
+      at castObjectId (D:\Projects\Node-Farm\node_modules\mongoose\lib\cast\objectid.js:25:12)
+      at SchemaObjectId.cast (D:\Projects\Node-Farm\node_modules\mongoose\lib\schema\objectId.js:248:12)
+      at SchemaType.applySetters (D:\Projects\Node-Farm\node_modules\mongoose\lib\schemaType.js:1236:12)
+      at SchemaType.castForQuery (D:\Projects\Node-Farm\node_modules\mongoose\lib\schemaType.js:1653:17)
+      at cast (D:\Projects\Node-Farm\node_modules\mongoose\lib\cast.js:389:32)
+      at Query.cast (D:\Projects\Node-Farm\node_modules\mongoose\lib\query.js:4868:12)
+      at Query._castConditions (D:\Projects\Node-Farm\node_modules\mongoose\lib\query.js:2265:10)
+      at model.Query._findOne (D:\Projects\Node-Farm\node_modules\mongoose\lib\query.js:2589:8)
+      at model.Query.exec (D:\Projects\Node-Farm\node_modules\mongoose\lib\query.js:4412:80),
+  valueType: 'string'
+} 
