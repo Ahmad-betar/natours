@@ -65,7 +65,7 @@ module.exports = (err, req, res, next) => {
   } else if (process.env.NODE_ENV === 'development') {
     let error = { ...err, message: err.message, name: err.name };
 
-    console.log(error);
+    // console.log(err);
 
     if (error.name === 'CastError') {
       error = handleCastErrorDB(error);

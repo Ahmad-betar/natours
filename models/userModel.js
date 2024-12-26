@@ -43,17 +43,20 @@ const userSchema = new mongoose.Schema({
   active: {
     type: Boolean,
     default: true,
-    select: true,
+    select: false,
   },
   passwordChangedAt: Date,
   passwordResetToken: String,
   passwordResetExpires: Date,
 });
-
+userSchema.index({ email: 1 });
 userSchema.pre('save', async function (next) {
-  if (!this.isModified('password')) return next();
+  // if (!this.isModified('password')) return next();
 
-  this.password = await bcrypt.hash(this.password, 12);
+  const pass = await bcrypt.hash(this.password, 12);
+  console.log(pass);
+
+  this.password = pass;
 
   this.passwordConfirm = undefined;
 
@@ -61,15 +64,18 @@ userSchema.pre('save', async function (next) {
 });
 
 userSchema.pre('save', async function (next) {
-  if (!this.isModified('password')) return next();
+  // if (!this.isModified('password')) return next();
 
   this.passwordChangedAt = Date.now() - 1000;
 
   next();
 });
 
+// Pre-hook to exclude sensitive fields for find queries
 userSchema.pre(/^find/, function (next) {
   this.find({ active: { $ne: false } });
+
+  this.select('-passwordChangedAt -passwordResetToken -passwordResetExpires');
 
   next();
 });

@@ -9,7 +9,7 @@ const helmet = require('helmet');
 const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
-
+const reviewRoutes = require('./routes/reviewRoutes');
 
 const ratelimiterMiddleware = rateLimit({
   windowMs: 1000 * 60 * 60,
@@ -44,6 +44,7 @@ app.use(express.static(`${__dirname}/public`));
 app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/tours', tourRoutes);
 app.use('/api/v1/auth', authRoutes);
+app.use('/api/v1/review', reviewRoutes);
 
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();

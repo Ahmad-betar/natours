@@ -2,6 +2,7 @@ const express = require('express');
 const catchAsync = require('../utils/catchAsync');
 const tourController = require('./../controllers/tourController');
 const authController = require('./../controllers/authController');
+const reviewController = require('./../controllers/reviewController');
 const { protect } = require('../controllers/authController');
 
 const tourRoutes = express.Router();
@@ -11,17 +12,23 @@ tourRoutes.use(protect);
 tourRoutes
   .route('/')
   .get(catchAsync(tourController.GetAllTours))
-  .post(catchAsync(tourController.CreateTour));
+  .post(
+    authController.restrictTo('admin', 'lead-guide'),
+    catchAsync(tourController.CreateTour)
+  );
 
 tourRoutes.route('/month/:year').get(catchAsync(tourController.getMonthlyplan));
 
 tourRoutes
   .route('/:id')
-  .get(
+  .get(catchAsync(tourController.getTourById))
+  .delete(
     authController.restrictTo('admin', 'lead-guide'),
-    catchAsync(tourController.getTourById)
+    catchAsync(tourController.DeleteTour)
   )
-  .delete(catchAsync(tourController.DeleteTour))
-  .patch(catchAsync(tourController.UpdateTour));
+  .patch(
+    authController.restrictTo('admin', 'lead-guide'),
+    catchAsync(tourController.UpdateTour)
+  );
 
 module.exports = tourRoutes;

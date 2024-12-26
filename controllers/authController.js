@@ -46,18 +46,18 @@ exports.signIn = async (req, res, next) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
-    return next(new AppError('email and passwrod is required', 400));
+    return next(new AppError('Email and password are required', 400));
   }
 
+  // Find user and include the password field
   const user = await User.findOne({ email }).select('+password');
 
-  //to make it faster
-  //if there is no user correct method will not be triggered
-  if (!user || !(await user.correctPassword(password, user.password)))
+  // Check if user exists and if the password is correct
+  if (!user || !(await user.correctPassword(password, user.password))) {
     return next(new AppError('Incorrect Email or Password', 401));
+  }
 
-  user.password = undefined;
-
+  // If everything is okay, create and send the token
   return createSendToken(user, 200, res);
 };
 
